@@ -1,24 +1,43 @@
-<nav>
+<nav class="navbar">
     <div class="site-title">
-        <a href="/"><h1>Sura Blog</h1></a>
+        <a href="/">Sura Blog</a>
     </div>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/blogs">All Blogs</a></li>
 
-        <!-- ✅ AUTHENTICATION LOGIC -->
-        <% if (user) { %>
-            <!-- User is Logged In -->
-            <li style="color: white; font-weight: bold; margin-right: 15px;">
-                Hi, <%= user.email.split('@')[0] %>
-            </li>
-            <li><a href="/blogs/create">Create Blog</a></li>
-            <li><a href="/auth/logout" class="btn">Log out</a></li>
-        <% } else { %>
-            <!-- User is Guest -->
-            <li><a href="/auth/login">Login</a></li>
-            <li><a href="/auth/signup">Sign Up</a></li>
-        <% } %>
-    </ul>
+    <!-- The Hamburger Icon (Visible only on mobile) -->
+    <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </a>
+
+    <!-- The Links -->
+    <div class="navbar-links">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/blogs">All Blogs</a></li>
+
+            <% if (user) { %>
+                <!-- Logged In -->
+                <li class="user-greeting">Hi, <%= user.email.split('@')[0] %></li>
+                <li><a href="/blogs/create">Create Blog</a></li>
+                <li><a href="/auth/logout" class="btn logout">Log out</a></li>
+            <% } else { %>
+                <!-- Guest -->
+                <li><a href="/auth/login">Login</a></li>
+                <li><a href="/auth/signup" class="btn">Sign Up</a></li>
+            <% } %>
+        </ul>
+    </div>
 </nav>
+
+<!-- JavaScript to toggle the menu -->
+<script>
+    const toggleButton = document.querySelector('.toggle-button');
+    const navbarLinks = document.querySelector('.navbar-links');
+
+    toggleButton.addEventListener('click', (e) => {
+        e.preventDefault(); // Stop page from jumping to top
+        navbarLinks.classList.toggle('active'); // Show/Hide menu
+    });
+</script>

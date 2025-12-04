@@ -7,7 +7,7 @@
     --secondary-color: #64748b;     /* Slate Grey */
     --success-color: #10b981;       /* Green */
     --warning-color: #f59e0b;       /* Amber (For Edit) */
-    --danger-color: #ef4444;        /* Red (For Delete) */
+    --danger-color: #dc2626;        /* Red (For Delete/Logout) */
     --background-color: #f1f5f9;    /* Light Blue-Grey BG */
     --card-bg: #ffffff;
     --text-main: #1e293b;
@@ -29,7 +29,7 @@ body {
     background-color: var(--background-color);
     color: var(--text-main);
     line-height: 1.6;
-    padding-bottom: 50px; /* Space for footer */
+    padding-bottom: 50px;
 }
 
 a {
@@ -44,32 +44,35 @@ ul {
 /* =========================================
    2. NAVIGATION BAR
    ========================================= */
-nav {
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* Your nice gradient */
     padding: 15px 5%;
-    position: sticky; /* Stays at the top */
+    position: relative; /* Essential for Hamburger positioning */
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
-nav .site-title h1 {
+.site-title a {
     font-size: 1.5rem;
     color: white;
     font-weight: 800;
     letter-spacing: -0.5px;
 }
 
-nav ul {
+/* Desktop Links Container */
+.navbar-links ul {
     display: flex;
     align-items: center;
     gap: 20px;
+    margin: 0;
+    padding: 0;
 }
 
-nav li a {
+.navbar-links li a {
     color: #e2e8f0;
     font-weight: 500;
     font-size: 0.95rem;
@@ -78,26 +81,54 @@ nav li a {
     transition: all 0.3s ease;
 }
 
-nav li a:hover {
+.navbar-links li a:hover {
     background: rgba(255, 255, 255, 0.1);
     color: white;
     transform: translateY(-1px);
 }
 
-/* Logout Button Special Style */
-nav li a.btn {
-    background-color: var(--danger-color);
-    color: white;
-    padding: 8px 16px;
+/* User Greeting */
+.user-greeting {
+    color: #cbd5e1;
+    font-weight: 600;
     font-size: 0.9rem;
 }
-nav li a.btn:hover {
-    background-color: #dc2626;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+
+/* Logout / Red Button Style */
+.btn {
+    background-color: var(--danger-color);
+    color: white !important; /* Force white text */
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+.btn:hover {
+    background-color: #b91c1c;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
 }
 
 /* =========================================
-   3. HEADERS & TYPOGRAPHY
+   3. HAMBURGER MENU ICON (Hidden on Desktop)
+   ========================================= */
+.toggle-button {
+    position: absolute;
+    top: 22px;
+    right: 20px;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+}
+
+.toggle-button .bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+/* =========================================
+   4. HEADERS & TYPOGRAPHY
    ========================================= */
 h1, h2, h3 {
     color: var(--text-main);
@@ -109,7 +140,7 @@ h1 { font-size: 2.2rem; font-weight: 800; text-align: center; margin: 30px 0; }
 h2 { font-size: 1.5rem; font-weight: 700; }
 
 /* =========================================
-   4. BUTTONS (The Beautiful Part)
+   5. BUTTONS
    ========================================= */
 /* Default Button (Blue) */
 button, .button {
@@ -133,7 +164,7 @@ button:hover, .button:hover {
     box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
 }
 
-/* ✨ THE EDIT BUTTON (Beautiful Amber) ✨ */
+/* ✨ THE EDIT BUTTON (Amber) ✨ */
 a.button[href*="edit"] {
     background: var(--warning-color);
     box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2);
@@ -149,12 +180,12 @@ a.button[href*="edit"]:hover {
     box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
 }
 .delete-button:hover {
-    background: #dc2626;
+    background: #b91c1c;
     box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3);
 }
 
 /* =========================================
-   5. CARDS & LAYOUT
+   6. CARDS & LAYOUT
    ========================================= */
 .content, .container, .blog-details, .create-blog, .auth-form, .error-box, .card {
     max-width: 800px;
@@ -220,7 +251,7 @@ a.button[href*="edit"]:hover {
 }
 
 /* =========================================
-   6. FORMS (Login, Signup, Create)
+   7. FORMS (Login, Signup, Create)
    ========================================= */
 form label {
     display: block;
@@ -258,7 +289,7 @@ form textarea {
 }
 
 .auth-form {
-    max-width: 450px; /* Slimmer for login pages */
+    max-width: 450px;
 }
 
 /* Error Messages */
@@ -271,7 +302,7 @@ form textarea {
 }
 
 /* =========================================
-   7. BLOG DETAILS PAGE
+   8. BLOG DETAILS PAGE
    ========================================= */
 .blog-details h1 {
     font-size: 2.5rem;
@@ -284,6 +315,10 @@ form textarea {
     font-size: 1.1rem;
     line-height: 1.8;
     color: #334155;
+    /* Remove padding since container already has it */
+    padding: 0; 
+    box-shadow: none;
+    border: none;
 }
 
 .blog-details small {
@@ -295,7 +330,7 @@ form textarea {
 }
 
 /* =========================================
-   8. FOOTER
+   9. FOOTER
    ========================================= */
 footer {
     text-align: center;
@@ -303,34 +338,9 @@ footer {
     font-size: 0.9rem;
     margin-top: 60px;
     padding: 20px;
+    border-top: 1px solid #e2e8f0;
 }
 
-/* =========================================
-   9. MOBILE RESPONSIVE
-   ========================================= */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        padding: 20px;
-    }
-    nav ul {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 15px;
-    }
-    nav li {
-        width: 100%;
-        margin: 5px 0;
-    }
-    nav li a {
-        display: block;
-        text-align: center;
-    }
-    .content, .container, .blog-details {
-        width: 90%;
-        padding: 20px;
-    }
-}
 /* =========================================
    10. SEARCH BAR STYLES
    ========================================= */
@@ -338,20 +348,21 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 0; /* Remove default margin */
+    margin: 0;
 }
 
 .search-form input[type="text"] {
     padding: 8px 15px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Round shape */
+    border-radius: 20px;
     font-size: 0.9rem;
     width: 200px;
     transition: width 0.3s ease;
+    margin: 0; /* Reset margins */
 }
 
 .search-form input[type="text"]:focus {
-    width: 250px; /* Expands when clicked */
+    width: 250px;
     border-color: var(--primary-color);
     outline: none;
 }
@@ -359,8 +370,9 @@ footer {
 .search-form button {
     padding: 8px 15px;
     font-size: 0.9rem;
-    margin-top: 0; /* Align with input */
+    margin-top: 0;
     border-radius: 20px;
+    box-shadow: none;
 }
 
 .clear-search {
@@ -368,4 +380,69 @@ footer {
     font-size: 0.9rem;
     text-decoration: underline;
     cursor: pointer;
+}
+
+/* =========================================
+   11. MOBILE RESPONSIVE (THE MAGIC)
+   ========================================= */
+@media (max-width: 800px) {
+    /* 1. Show the Hamburger */
+    .toggle-button {
+        display: flex;
+    }
+
+    /* 2. Hide the links by default */
+    .navbar-links {
+        display: none;
+        width: 100%;
+    }
+
+    /* 3. Re-organize layout to vertical */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start; /* Align to left */
+        padding: 15px;
+    }
+
+    .navbar-links ul {
+        width: 100%;
+        flex-direction: column; /* Stack links */
+        padding-top: 20px;
+        gap: 10px;
+    }
+
+    .navbar-links li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar-links li a {
+        display: block;
+        padding: 12px;
+        background: rgba(255,255,255,0.05); /* Slight BG for touch targets */
+    }
+
+    /* 4. Search bar adjustment for mobile */
+    .search-form {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .search-form input[type="text"] {
+        width: 100%;
+    }
+    .search-form button {
+        width: 100%;
+    }
+
+    /* 5. The class added by JS to SHOW the menu */
+    .navbar-links.active {
+        display: flex;
+    }
+
+    /* Adjust container padding */
+    .content, .container, .blog-details {
+        width: 90%;
+        padding: 20px;
+    }
 }
