@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body class="home">
+    <%- include('partials/nav') %>
+
+    <div class="create-blog content">
+        <h2>Edit Your Comment</h2>
+        
+        <form action="/blogs/<%= blogId %>/comments/<%= comment._id %>/update" method="POST">
+            <label for="body">Comment:</label>
+            <textarea id="body" name="body" required style="min-height: 100px;"><%= comment.body %></textarea>
+
+            <div style="margin-top: 20px;">
+                <button type="submit">Update Comment</button>
+                <a href="/blogs/<%= blogId %>" class="button" style="background: #64748b; margin-left: 10px;">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

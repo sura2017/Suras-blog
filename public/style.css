@@ -1,0 +1,371 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    --primary-color: #2563eb;       /* Modern Blue */
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;     /* Slate Grey */
+    --success-color: #10b981;       /* Green */
+    --warning-color: #f59e0b;       /* Amber (For Edit) */
+    --danger-color: #ef4444;        /* Red (For Delete) */
+    --background-color: #f1f5f9;    /* Light Blue-Grey BG */
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-light: #64748b;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding-bottom: 50px; /* Space for footer */
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+ul {
+    list-style: none;
+}
+
+/* =========================================
+   2. NAVIGATION BAR
+   ========================================= */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 15px 5%;
+    position: sticky; /* Stays at the top */
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+nav .site-title h1 {
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav li a {
+    color: #e2e8f0;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+nav li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* Logout Button Special Style */
+nav li a.btn {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+nav li a.btn:hover {
+    background-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* =========================================
+   3. HEADERS & TYPOGRAPHY
+   ========================================= */
+h1, h2, h3 {
+    color: var(--text-main);
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+h1 { font-size: 2.2rem; font-weight: 800; text-align: center; margin: 30px 0; }
+h2 { font-size: 1.5rem; font-weight: 700; }
+
+/* =========================================
+   4. BUTTONS (The Beautiful Part)
+   ========================================= */
+/* Default Button (Blue) */
+button, .button {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    text-align: center;
+}
+
+button:hover, .button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* ✨ THE EDIT BUTTON (Beautiful Amber) ✨ */
+a.button[href*="edit"] {
+    background: var(--warning-color);
+    box-shadow: 0 4px 6px rgba(245, 158, 11, 0.2);
+}
+a.button[href*="edit"]:hover {
+    background: #d97706;
+    box-shadow: 0 6px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Delete Button (Red) */
+.delete-button {
+    background: var(--danger-color);
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
+}
+.delete-button:hover {
+    background: #dc2626;
+    box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* =========================================
+   5. CARDS & LAYOUT
+   ========================================= */
+.content, .container, .blog-details, .create-blog, .auth-form, .error-box, .card {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* Blog List Items */
+.blog-box {
+    background: white;
+    border-radius: var(--radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-box:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+/* Decorative left border on hover */
+.blog-box:hover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: var(--primary-color);
+}
+
+.blog-box h2 a {
+    color: var(--text-main);
+    font-size: 1.4rem;
+}
+
+.blog-box h2 a:hover {
+    color: var(--primary-color);
+}
+
+.blog-box p {
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.blog-box em {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin-top: 15px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* =========================================
+   6. FORMS (Login, Signup, Create)
+   ========================================= */
+form label {
+    display: block;
+    margin: 20px 0 8px;
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+form input:focus,
+form textarea:focus {
+    border-color: var(--primary-color);
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.auth-form {
+    max-width: 450px; /* Slimmer for login pages */
+}
+
+/* Error Messages */
+.error {
+    color: var(--danger-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+/* =========================================
+   7. BLOG DETAILS PAGE
+   ========================================= */
+.blog-details h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.blog-details .content {
+    margin: 30px 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #334155;
+}
+
+.blog-details small {
+    color: #94a3b8;
+    display: block;
+    margin-top: 40px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 20px;
+}
+
+/* =========================================
+   8. FOOTER
+   ========================================= */
+footer {
+    text-align: center;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin-top: 60px;
+    padding: 20px;
+}
+
+/* =========================================
+   9. MOBILE RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        padding: 20px;
+    }
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 15px;
+    }
+    nav li {
+        width: 100%;
+        margin: 5px 0;
+    }
+    nav li a {
+        display: block;
+        text-align: center;
+    }
+    .content, .container, .blog-details {
+        width: 90%;
+        padding: 20px;
+    }
+}
+/* =========================================
+   10. SEARCH BAR STYLES
+   ========================================= */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0; /* Remove default margin */
+}
+
+.search-form input[type="text"] {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Round shape */
+    font-size: 0.9rem;
+    width: 200px;
+    transition: width 0.3s ease;
+}
+
+.search-form input[type="text"]:focus {
+    width: 250px; /* Expands when clicked */
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.search-form button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    margin-top: 0; /* Align with input */
+    border-radius: 20px;
+}
+
+.clear-search {
+    color: var(--danger-color);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body class="about">
+
+    <%- include('partials/nav') %>
+
+    <div class="card" style="max-width: 900px;">
+        <h1 style="margin-bottom: 10px;">About the Developer</h1>
+        
+        <% if (user) { %>
+            <p style="font-size: 1.1rem; color: var(--primary-color); font-weight: 600; margin-bottom: 30px;">
+                Welcome back, <%= user.email.split('@')[0] %>!
+            </p>
+        <% } %>
+
+        <div style="text-align: left; margin-top: 40px;">
+            <h2 style="border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">👨‍💻 Who is Sura?</h2>
+            <p style="margin-bottom: 20px; color: #475569;">
+                I am a passionate Full-Stack Developer who loves building complex systems. I don't just write code; I build solutions. 
+                From managing databases to crafting beautiful user interfaces, I handle the entire lifecycle of web development.
+            </p>
+
+            <h2 style="border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 40px;">🚀 About This Project</h2>
+            <p style="margin-bottom: 20px; color: #475569;">
+                This blog is not just a website; it is a complete demonstration of modern <strong>MVC (Model-View-Controller)</strong> architecture.
+                It was built from scratch to demonstrate advanced backend concepts.
+            </p>
+
+            <h3 style="margin-top: 20px;">🛠️ The Tech Stack</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
+                <span style="background: #e0f2fe; color: #0284c7; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Node.js</span>
+                <span style="background: #f0fdf4; color: #16a34a; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">MongoDB Atlas</span>
+                <span style="background: #fff7ed; color: #ea580c; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">Express.js</span>
+                <span style="background: #fef2f2; color: #dc2626; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">EJS Templating</span>
+                <span style="background: #f5f3ff; color: #7c3aed; padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;">JWT Auth</span>
+            </div>
+
+            <h3 style="margin-top: 30px;">✨ Key Features</h3>
+            <ul style="list-style-type: disc; margin-left: 20px; color: #475569; line-height: 1.8;">
+                <li><strong>Secure Authentication:</strong> Login and Signup protected by BCrypt hashing.</li>
+                <li><strong>Authorization:</strong> Admin and User roles with strict permission checks.</li>
+                <li><strong>Dynamic Content:</strong> Users can create, edit, and delete their own stories.</li>
+                <li><strong>Social:</strong> Real-time Likes and Commenting system.</li>
+                <li><strong>Search:</strong> Full-text search capability for filtering blogs.</li>
+            </ul>
+        </div>
+
+        <div class="quick-links" style="margin-top: 50px; border-top: 1px solid #f1f5f9; padding-top: 30px;">
+            <a href="/blogs" class="button">View My Work</a>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

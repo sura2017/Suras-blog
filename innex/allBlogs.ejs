@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include('partials/head') %>
+</head>
+<body class="home">
+
+    <%- include('partials/nav') %>
+
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h1>All Blogs</h1>
+            
+            <!-- ✅ SEARCH BAR -->
+            <form action="/blogs" method="GET" class="search-form">
+                <input type="text" name="search" placeholder="Search by title..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+                <button type="submit">Search</button>
+                <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+                    <a href="/blogs" class="clear-search">Clear</a>
+                <% } %>
+            </form>
+        </div>
+
+        <div class="blogs-container">
+            <% if (blogs.length > 0) { %>
+                <% blogs.forEach(blog => { %>
+                    <div class="blog-box">
+                        
+                        <h2><a href="/blogs/<%= blog._id %>"><%= blog.title %></a></h2>
+                        <p><strong>Snippet:</strong> <%= blog.snippet %></p>
+                        <p><em>By: <%= blog.author ? blog.author.email : 'Unknown' %></em></p>
+                        
+                        <p><small style="color: #64748b;">
+                            Published: <%= moment(blog.createdAt).fromNow() %>
+                        </small></p>
+
+                        <!-- DELETE BUTTON: Owner OR Admin -->
+                        <% if (user && (user._id.toString() == blog.author._id.toString() || user.role == 'admin')) { %>
+                            <form action="/blogs/<%= blog._id %>/delete" method="POST">
+                                <button class="delete-button" type="submit">Delete</button>
+                            </form>
+                        <% } %>
+
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div style="text-align: center; padding: 40px;">
+                    <h3>No blogs found...</h3>
+                    <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+                        <p>No results for "<strong><%= searchQuery %></strong>"</p>
+                        <a href="/blogs" class="button">View All Blogs</a>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

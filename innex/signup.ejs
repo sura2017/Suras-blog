@@ -1,0 +1,83 @@
+<html lang="en">
+    <!-- Include Head -->
+    <%- include('partials/head') %> 
+
+    <body>
+        <!-- Include Navbar -->
+        <%- include('partials/nav') %> 
+
+        <div class="create-blog content">
+            <form class="auth-form">
+                <h2>Sign Up</h2>
+                
+                <label for="email">Email</label>
+                <input type="text" name="email" required />
+                <div class="email error" style="color: red; font-size: 0.9em;"></div>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" required />
+                <div class="password error" style="color: red; font-size: 0.9em;"></div>
+
+                <button>Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Include Footer -->
+        <%- include('partials/footer') %> 
+
+        <script>
+            const form = document.querySelector('form');
+            const emailError = document.querySelector('.email.error');
+            const passwordError = document.querySelector('.password.error');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // 1. Reset Error Messages
+                emailError.textContent = '';
+                passwordError.textContent = '';
+
+                // 2. Get values from form
+                const email = form.email.value;
+                const password = form.password.value;
+
+                try {
+                    // 3. Send data to server
+                    const res = await fetch('/auth/signup', { 
+                        method: 'POST', 
+                        body: JSON.stringify({ email, password }),
+                        headers: {'Content-Type': 'application/json'}
+                    });
+
+                    // 4. Handle Response
+                    // If success (redirected to login)
+                    if (res.redirected) {
+                        location.assign(res.url);
+                        return;
+                    }
+
+                    // If error (server sent text message)
+                    const data = await res.text();
+
+                    if (res.status === 400) {
+                        // Determine where to show the error
+                        if (data.includes('email')) {
+                            emailError.textContent = data;
+                        } else if (data.includes('password')) {
+                            passwordError.textContent = data;
+                        } else {
+                            // If unclear, show under password
+                            passwordError.textContent = data;
+                        }
+                    } else if (res.ok) {
+                        // Fallback success
+                        location.assign('/auth/login');
+                    }
+
+                } catch (err) {
+                    console.log(err);
+                }
+            });
+        </script>
+    </body>
+</html>

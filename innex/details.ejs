@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+</head>
+<body class="home">
+
+    <%- include('partials/nav') %>
+
+    <div class="blog-details">
+        <h1><%= blog.title %></h1>
+        <p><em>Written by: <%= blog.author ? blog.author.email : 'Unknown' %></em></p>
+        
+        <small style="color: #64748b; font-weight: 500; display: block; margin-bottom: 20px;">
+            📅 Published: <%= moment(blog.createdAt).format('Do MMM YYYY') %> 
+        </small>
+
+        <div class="content"><p><%= blog.body %></p></div>
+
+        <!-- LOGIC MOVED HERE TO FIX RED LINES -->
+        <% 
+            let likeColor = '#ccc'; 
+            let likeText = '🤍 Like';
+            if (user && blog.likes.includes(user._id)) {
+                likeColor = '#ef4444'; 
+                likeText = '❤️ Liked';
+            }
+        %>
+
+        <!-- LIKE SECTION -->
+        <div style="margin: 20px 0; padding: 10px; background: #f8fafc; border-radius: 8px; display: flex; align-items: center; gap: 10px;">
+            <form action="/blogs/<%= blog._id %>/like" method="POST" style="margin:0;">
+                <button type="submit" style="background: <%= likeColor %>; border: none; padding: 8px 15px; border-radius: 20px; color: white; cursor: pointer;">
+                    <%= likeText %>
+                </button>
+            </form>
+            <span style="font-weight: bold; color: #555;"><%= blog.likes.length %> Likes</span>
+        </div>
+
+        <!-- BLOG EDIT/DELETE BUTTONS -->
+        <% if (user && (user._id.toString() == blog.author._id.toString() || user.role == 'admin')) { %>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <a href="/blogs/<%= blog._id %>/edit" class="button" style="background: var(--warning-color);">Edit</a>
+                <form action="/blogs/<%= blog._id %>/delete" method="POST" style="margin:0;">
+                    <button type="submit" class="delete-button" style="margin-top:0;">Delete</button>
+                </form>
+            </div>
+        <% } %>
+        
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <!-- COMMENT SECTION -->
+        <h3>💬 Comments (<%= comments.length %>)</h3>
+
+        <!-- Comment Form -->
+        <% if (user) { %>
+            <form action="/blogs/<%= blog._id %>/comment" method="POST" style="margin-bottom: 30px;">
+                <textarea name="body" placeholder="Write a comment..." required style="min-height: 80px;"></textarea>
+                <button type="submit" style="margin-top: 10px;">Post Comment</button>
+            </form>
+        <% } else { %>
+            <p><a href="/auth/login" style="color: var(--primary-color);">Login</a> to leave a comment.</p>
+        <% } %>
+
+        <!-- ✅ LOOP THROUGH ALL COMMENTS -->
+        <div class="comments-list">
+            <% if (comments.length > 0) { %>
+                <% comments.forEach(comment => { %>
+                    <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 15px; position: relative;">
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <p style="font-weight: bold; margin-bottom: 5px; color: #334155;">
+                                    <%= comment.author.email.split('@')[0] %> 
+                                    <small style="color: #94a3b8; font-weight: normal;">• <%= moment(comment.createdAt).fromNow() %></small>
+                                </p>
+                                <p style="margin: 0; color: #475569;"><%= comment.body %></p>
+                            </div>
+
+                            <!-- Comment Edit/Delete Icons (Owner or Admin) -->
+                            <% if (user && (user._id.toString() == comment.author._id.toString() || user.role == 'admin')) { %>
+                                <div style="display: flex; gap: 8px;">
+                                    
+                                    <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit" 
+                                       style="text-decoration: none; font-size: 1.2rem;" title="Edit">
+                                       ✏️
+                                    </a>
+
+                                    <form action="/blogs/<%= blog._id %>/comments/<%= comment._id %>/delete" method="POST" style="margin:0;">
+                                        <button type="submit" 
+                                            style="background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0; box-shadow: none;" 
+                                            title="Delete">
+                                            🗑️
+                                        </button>
+                                    </form>
+
+                                </div>
+                            <% } %>
+                        </div>
+
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p style="color: #888;">No comments yet. Be the first!</p>
+            <% } %>
+        </div>
+
+        <div class="quick-links" style="margin-top: 20px;">
+            <a href="/blogs" class="button">← Back to All Blogs</a>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
