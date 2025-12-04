@@ -21,7 +21,7 @@ mongoose.connect(dbURI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log('DB Connection Error:', err));
 
-// Settings
+// Settings`
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'innex')); 
 
